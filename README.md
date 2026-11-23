@@ -38,6 +38,7 @@ As the **Model Context Protocol (MCP)** becomes the industry standard bridging L
 
 ## Highlights
 
+- **Claude Desktop & Cursor Doctor**: Diagnose all configured MCP servers, missing binaries, and latency bottlenecks in 1 click (`mcpx doctor`).
 - **Interactive Terminal UI**: Inspect tools, parameters, resources, and prompt templates in a responsive Bento layout.
 - **Wire Traffic Log**: Monitor JSON-RPC 2.0 bidirectional frames with microsecond round-trip latency.
 - **Compliance & Benchmark Suite**: Run automated conformance sweeps and percentile latency profiles (p50, p95, p99).
@@ -51,30 +52,38 @@ As the **Model Context Protocol (MCP)** becomes the industry standard bridging L
 ### Installation
 
 ```bash
-git clone https://github.com/BNTiyan/mcpx.git
-cd mcpx
-pip install -e .
+# 1-Line Standalone Install (via curl)
+curl -fsSL https://raw.githubusercontent.com/BNTiyan/mcpx/main/install.sh | bash
+
+# Or install from source
+git clone https://github.com/BNTiyan/mcpx.git && cd mcpx && pip install -e .
 ```
 
-### 1. Try the Built-in Demo
+### 1. Diagnose Your Claude Desktop or Cursor MCP Servers
+Instantly find broken servers, missing binaries, or crashed processes:
+```bash
+mcpx doctor
+```
+
+### 2. Try the Built-in Demo
 Test out the full inspector immediately using the included reference MCP server:
 ```bash
 mcpx demo
 ```
 
-### 2. Inspect Any External MCP Server
+### 3. Inspect Any External MCP Server
 Point `mcpx` to any MCP server executable:
 ```bash
 mcpx inspect "python path/to/my_mcp_server.py"
 ```
 
-### 3. Run Automated Compliance Benchmarks
+### 4. Run Automated Compliance Benchmarks
 Benchmark tool latency and verify protocol conformance across 30 iterations:
 ```bash
 mcpx test "python path/to/my_mcp_server.py" -n 30 -o mcp_report.md
 ```
 
-### 4. Execute a Single Tool Directly
+### 5. Execute a Single Tool Directly
 ```bash
 mcpx call "python path/to/my_mcp_server.py" --tool calculate --args '{"expression": "144 ** 0.5"}'
 ```

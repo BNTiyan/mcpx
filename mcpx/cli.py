@@ -11,6 +11,7 @@ from typing import Optional
 from rich.console import Console
 
 from mcpx.client import MCPClient
+from mcpx.doctor import run_doctor
 from mcpx.tester import MCPTester, generate_markdown_report
 from mcpx.tui import (
     render_benchmark_scorecard,
@@ -121,11 +122,17 @@ def main() -> None:
     # Demo
     subparsers.add_parser("demo", help="Launch interactive inspection of built-in reference MCP server")
 
+    # Doctor
+    doctor_parser = subparsers.add_parser("doctor", help="Diagnose Claude Desktop / Cursor MCP servers for crashes and latency")
+    doctor_parser.add_argument("--config", help="Custom path to MCP configuration JSON file")
+
     args = parser.parse_args()
 
     if not args.subcommand or args.subcommand == "demo":
         mock_cmd = f"{sys.executable} -m mcpx.mock_server"
         asyncio.run(inspect_command(mock_cmd))
+    elif args.subcommand == "doctor":
+        asyncio.run(run_doctor(args.config))
     elif args.subcommand == "inspect":
         asyncio.run(inspect_command(args.command))
     elif args.subcommand == "call":

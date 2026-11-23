@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import shlex
 import time
 from typing import Any, Dict, List, Optional, Tuple
@@ -53,11 +54,16 @@ class MCPClient:
     async def start(self) -> ServerCapabilities:
         """Launches the server subprocess and performs the initialize handshake."""
         args = shlex.split(self.command)
+        env = os.environ.copy()
+        pythonpath = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = f"{os.getcwd()}:{pythonpath}" if pythonpath else os.getcwd()
+
         self._process = await asyncio.create_subprocess_exec(
             *args,
             stdin=asyncio.subprocess.PIPE,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
+            env=env,
         )
         self._read_task = asyncio.create_task(self._reader_loop())
 
