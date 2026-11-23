@@ -11,6 +11,10 @@
 
 *Zero-dependency, lightning-fast terminal observability for AI agent tool servers.*
 
+<br/>
+
+<img src="assets/demo.svg" alt="mcpx Terminal Demo" width="100%"/>
+
 </div>
 
 ---
