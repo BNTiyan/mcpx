@@ -59,31 +59,47 @@ curl -fsSL https://raw.githubusercontent.com/BNTiyan/mcpx/main/install.sh | bash
 git clone https://github.com/BNTiyan/mcpx.git && cd mcpx && pip install -e .
 ```
 
-### 1. Diagnose Your Claude Desktop or Cursor MCP Servers
+### 1. Launch Local Web Studio & Interactive Playground (New in v1.1)
+Open a zero-dependency, dark-mode glassmorphic Bento Grid studio in your browser with real-time tool execution, schema generation, and traffic waterfall:
+```bash
+# Launch with built-in reference server
+mcpx web
+
+# Or launch with your custom MCP server
+mcpx web "python path/to/my_mcp_server.py" --port 8765
+```
+
+### 2. Transparent Traffic Sniffer & Proxy for Claude Desktop & Cursor (New in v1.1)
+Intercept, inspect, and log all live JSON-RPC 2.0 communication between your AI agent and any MCP server in real time:
+```bash
+mcpx proxy "python path/to/my_mcp_server.py" --log traffic.jsonl
+```
+
+### 3. Diagnose Your Claude Desktop or Cursor MCP Servers
 Instantly find broken servers, missing binaries, or crashed processes:
 ```bash
 mcpx doctor
 ```
 
-### 2. Try the Built-in Demo
+### 4. Try the Built-in Terminal TUI
 Test out the full inspector immediately using the included reference MCP server:
 ```bash
 mcpx demo
 ```
 
-### 3. Inspect Any External MCP Server
+### 5. Inspect Any External MCP Server
 Point `mcpx` to any MCP server executable:
 ```bash
 mcpx inspect "python path/to/my_mcp_server.py"
 ```
 
-### 4. Run Automated Compliance Benchmarks
+### 6. Run Automated Compliance Benchmarks
 Benchmark tool latency and verify protocol conformance across 30 iterations:
 ```bash
 mcpx test "python path/to/my_mcp_server.py" -n 30 -o mcp_report.md
 ```
 
-### 5. Execute a Single Tool Directly
+### 7. Execute a Single Tool Directly
 ```bash
 mcpx call "python path/to/my_mcp_server.py" --tool calculate --args '{"expression": "144 ** 0.5"}'
 ```

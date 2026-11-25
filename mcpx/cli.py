@@ -12,7 +12,9 @@ from rich.console import Console
 
 from mcpx.client import MCPClient
 from mcpx.doctor import run_doctor
+from mcpx.proxy import run_proxy
 from mcpx.tester import MCPTester, generate_markdown_report
+from mcpx.web import run_web_studio
 from mcpx.tui import (
     render_benchmark_scorecard,
     render_header,
@@ -24,7 +26,7 @@ from mcpx.tui import (
 )
 
 console = Console()
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 async def inspect_command(command: str) -> None:
@@ -119,6 +121,17 @@ def main() -> None:
     test_parser.add_argument("-n", "--iterations", type=int, default=30, help="Benchmark iterations (default: 30)")
     test_parser.add_argument("-o", "--output", help="Export Markdown report to specified file")
 
+    # Web Studio
+    web_parser = subparsers.add_parser("web", help="Launch interactive local Web Studio & Testing Playground")
+    web_parser.add_argument("command", nargs="?", default=None, help="Command to run server (defaults to built-in demo server)")
+    web_parser.add_argument("--port", type=int, default=8765, help="HTTP port (default: 8765)")
+    web_parser.add_argument("--no-browser", action="store_true", help="Do not automatically open browser")
+
+    # Proxy / Sniffer
+    proxy_parser = subparsers.add_parser("proxy", help="Transparent stdio sniffer & proxy for Claude Desktop / Cursor")
+    proxy_parser.add_argument("command", help="Target command to run, e.g. 'python server.py'")
+    proxy_parser.add_argument("--log", help="Path to write traffic JSONL log")
+
     # Demo
     subparsers.add_parser("demo", help="Launch interactive inspection of built-in reference MCP server")
 
@@ -131,6 +144,11 @@ def main() -> None:
     if not args.subcommand or args.subcommand == "demo":
         mock_cmd = f"{sys.executable} -m mcpx.mock_server"
         asyncio.run(inspect_command(mock_cmd))
+    elif args.subcommand == "web":
+        target_cmd = args.command if args.command else f"{sys.executable} -m mcpx.mock_server"
+        asyncio.run(run_web_studio(target_cmd, port=args.port, open_browser=not args.no_browser))
+    elif args.subcommand == "proxy":
+        asyncio.run(run_proxy(args.command, log_file=args.log))
     elif args.subcommand == "doctor":
         asyncio.run(run_doctor(args.config))
     elif args.subcommand == "inspect":

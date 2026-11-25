@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcpx"
-version = "1.0.0"
+version = "1.1.0"
 description = "Universal Model Context Protocol (MCP) Terminal Inspector, Interactive Debugger & Protocol Benchmark Engine"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "BNTiyan", email = "NBR5MTR29@users.noreply.github.com"}
+    {name = "BNTiyan", email = "34437924+BNTiyan@users.noreply.github.com"}
 ]
 keywords = ["mcp", "model-context-protocol", "anthropic", "claude", "agent", "llm", "cli", "tui", "developer-tools", "benchmark"]
 classifiers = [

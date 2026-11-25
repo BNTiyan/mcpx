@@ -9,9 +9,11 @@ from mcpx.models import (
     MCPTool,
     ServerCapabilities,
 )
+from mcpx.proxy import MCPProxy, run_proxy
 from mcpx.tester import MCPTester, generate_markdown_report
+from mcpx.web import MCPXWebStudio, run_web_studio
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 __all__ = [
     "MCPClient",
@@ -24,4 +26,8 @@ __all__ = [
     "BenchmarkResult",
     "MCPTester",
     "generate_markdown_report",
+    "MCPXWebStudio",
+    "run_web_studio",
+    "MCPProxy",
+    "run_proxy",
 ]
